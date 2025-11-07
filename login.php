@@ -1,30 +1,66 @@
 <?php
+session_start();
 include 'db_connect.php';
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  $email = trim($_POST['email'] ?? '');
-  $password = $_POST['password'] ?? '';
+// Import PHPMailer classes
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
 
-  $stmt = $conn->prepare("SELECT id, fullname, password FROM users WHERE email = ?");
-  $stmt->bind_param("s", $email);
-  $stmt->execute();
-  $result = $stmt->get_result();
+require 'PHPMailer/src/Exception.php';
+require 'PHPMailer/src/PHPMailer.php';
+require 'PHPMailer/src/SMTP.php';
 
-  if ($row = $result->fetch_assoc()) {
-    if (password_verify($password, $row['password'])) {
-      echo "<script>alert('Welcome back, " . addslashes($row['fullname']) . "!'); window.location='levels.html';</script>";
-    } else {
-      echo "<script>alert('Incorrect password'); window.history.back();</script>";
+$email = $_POST['email'];
+$password = $_POST['password'];
+
+// Check credentials
+$sql = "SELECT * FROM users WHERE email='$email' AND password='$password'";
+$result = $conn->query($sql);
+
+if ($result->num_rows > 0) {
+    // Generate 6-digit OTP
+    $otp = rand(100000, 999999);
+
+    // Save OTP and email to session
+    $_SESSION['otp'] = $otp;
+    $_SESSION['email'] = $email;
+
+    // Send OTP using PHPMailer
+    $mail = new PHPMailer(true);
+
+    try {
+        // SMTP settings
+        $mail->isSMTP();
+        $mail->Host = 'smtp.gmail.com';
+        $mail->SMTPAuth = true;
+        $mail->Username = 'hemakaupasena160998@gmail.com'; // replace with your Gmail
+        $mail->Password = 'xsqurfgoobpevewb'; // 16-char app password
+        $mail->SMTPSecure = 'tls';
+        $mail->Port = 587;
+
+        // Sender & recipient
+        $mail->setFrom('hemakaupasena160998@gmail.com', 'Banana Puzzle Adventure');
+        $mail->addAddress($email);
+
+        // Email content
+        $mail->isHTML(true);
+        $mail->Subject = 'Your Banana Puzzle Adventure Verification Code';
+        $mail->Body = "<h3>Your verification code is: <strong>$otp</strong></h3>";
+
+        // Send email
+        $mail->send();
+
+        header("Location: verify_otp.php");
+        exit();
+
+    } catch (Exception $e) {
+        echo "Mailer Error: {$mail->ErrorInfo}";
     }
-  } else {
-    echo "<script>alert('No account found with that email'); window.history.back();</script>";
-  }
 
-  $stmt->close();
-  $conn->close();
 } else {
-  header("Location: login.html");
-  exit;
+    echo "❌ Invalid login credentials.";
 }
 ?>
+
+
 
