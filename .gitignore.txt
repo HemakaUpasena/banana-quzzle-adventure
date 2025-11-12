@@ -1,0 +1,6 @@
+# Ignore sensitive and local files
+db_connect.php
+.env
+.vscode/
+node_modules/
+.DS_Store
