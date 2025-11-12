@@ -9,5 +9,5 @@ if ($_POST['otp_input'] == $_SESSION['otp']) {
 } else {
     echo "❌ Incorrect code. Please try again.";
 }
-?>
+
 
