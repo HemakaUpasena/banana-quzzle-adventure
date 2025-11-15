@@ -33,7 +33,7 @@ if ($result->num_rows > 0) {
         $mail->isSMTP();
         $mail->Host = 'smtp.gmail.com';
         $mail->SMTPAuth = true;
-        $mail->Username = 'hemakaupasena160998@gmail.com'; // replace with your Gmail
+        $mail->Username = 'hemakaupasena160998@gmail.com'; 
         $mail->Password = 'xsqurfgoobpevewb'; // 16-char app password
         $mail->SMTPSecure = 'tls';
         $mail->Port = 587;
@@ -51,6 +51,7 @@ if ($result->num_rows > 0) {
         $mail->send();
 
         header("Location: verify_otp.php");
+
         exit();
 
     } catch (Exception $e) {
