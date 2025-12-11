@@ -1,112 +1,71 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Banana Puzzle Adventure - Select Difficulty</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Banana Puzzle Adventure — Select Level</title>
   <style>
     body {
       margin: 0;
       height: 100vh;
       font-family: "Poppins", sans-serif;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
+      display:flex;
+      justify-content:center;
+      align-items:center;
       background-color: #0b3d2e;
-      background-image: radial-gradient(#1a6148 1px, transparent 1px),
-        radial-gradient(#1a6148 1px, transparent 1px);
-      background-size: 40px 40px;
-      background-position: 0 0, 20px 20px;
-      color: #fff;
+      background-image: radial-gradient(#1a6148 1px, transparent 1px), radial-gradient(#1a6148 1px, transparent 1px);
+      background-size:40px 40px;
+      background-position:0 0, 20px 20px;
+      color:#0b3d2e;
     }
-
     .container {
-      background-color: rgba(0, 0, 0, 0.3);
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-      padding: 40px 30px;
-      width: 350px;
-      text-align: center;
+      background: rgba(0,0,0,0.32);
+      padding:34px; border-radius:16px; width:360px; text-align:center;
+      box-shadow:0 10px 30px rgba(0,0,0,0.45);
     }
-
-    .banana {
-      font-size: 48px;
-      margin-bottom: 10px;
-    }
-
-    .title {
-      font-size: 28px;
-      font-weight: 700;
-      color: #ffce00;
-      margin-bottom: 5px;
-    }
-
-    .subtitle {
-      font-size: 15px;
-      color: #cde9d7;
-      margin-bottom: 25px;
-    }
-
+    .banana { font-size:48px; margin-bottom:8px; animation: bounce 1.2s infinite; }
+    @keyframes bounce { 0%{ transform:translateY(0) } 50%{ transform:translateY(-8px) } 100%{ transform:translateY(0) } }
+    .title { font-size:26px; color:#ffce00; margin-bottom:6px; font-weight:800; }
+    .subtitle { color:#cde9d7; margin-bottom:18px; }
     .level-btn {
-      background-color: #ffb800;
-      color: #333;
-      font-weight: 600;
-      border: none;
-      width: 100%;
-      padding: 14px;
-      margin: 10px 0;
-      border-radius: 10px;
-      cursor: pointer;
-      font-size: 16px;
-      transition: all 0.3s ease;
+      display:block; width:100%; padding:12px; margin:8px 0; border-radius:10px;
+      border:none; font-weight:700; background:#ffb800; color:#222;
+      cursor:pointer; font-size:16px; transition:transform .12s, background .12s;
     }
-
-    .level-btn:hover {
-      background-color: #ffcf40;
-      transform: scale(1.05);
-    }
-
-    .footer-text {
-      font-size: 14px;
-      margin-top: 15px;
-      color: #cde9d7;
-    }
-
-    .footer-text a {
-      color: #ffce00;
-      text-decoration: none;
-      font-weight: 600;
-    }
-
-    .footer-text a:hover {
-      text-decoration: underline;
-    }
-
-    .selected {
-      background-color: #ffd74d;
-      color: #222;
-      transform: scale(1.05);
-    }
+    .level-btn:hover { transform:scale(1.03); }
+    .selected { background:#ffd74d; }
   </style>
 </head>
 <body>
-  <div class="container">
-    <div class="banana"></div>
-    <div class="title">Banana Puzzle Adventure</div>
-    <div class="subtitle">Select Your Difficulty Level</div>
 
-    <button onclick="startLevel('Easy')">Easy 🍌</button>
-<button onclick="startLevel('Medium')">Medium 🍌🍌</button>
-<button onclick="startLevel('Hard')">Hard 🍌🍌🍌</button>
+<div class="container">
+  <div class="banana">🍌</div>
+  <div class="title">Banana Puzzle Adventure</div>
+  <div class="subtitle">Choose a Level</div>
+
+  <button class="level-btn" onclick="startLevel(this,'Level 1')">Level 1 🍌</button>
+  <button class="level-btn" onclick="startLevel(this,'Level 2')">Level 2 🍌🍌</button>
+  <button class="level-btn" onclick="startLevel(this,'Level 3')">Level 3 🍌🍌🍌</button>
+  <button class="level-btn" onclick="startLevel(this,'Level 4')">Level 4 🍌🍌🍌🍌</button>
+  <button class="level-btn" onclick="startLevel(this,'Level 5')">Level 5 🍌🍌🍌🍌🍌</button>
+</div>
 
 <script>
-  function startLevel(level) {
-    localStorage.setItem('selectedLevel', level);
-    window.location.href = 'game.html';
-  }
+const prev = localStorage.getItem('selectedLevel');
+if (prev) {
+  document.querySelectorAll('.level-btn').forEach(btn => {
+    if (btn.textContent.includes(prev)) btn.classList.add('selected');
+  });
+}
+
+function startLevel(btn, level) {
+  localStorage.setItem('selectedLevel', level);
+  document.querySelectorAll('.level-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  setTimeout(() => window.location.href = "game.html", 120);
+}
 </script>
 
-  
 </body>
 </html>
+
