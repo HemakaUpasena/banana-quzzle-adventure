@@ -23,11 +23,11 @@
 
     .message { margin-top:10px; min-height:1.2em; }
 
-    /* correct animation */
+    
     .correct { animation: glow 900ms ease-out; }
     @keyframes glow { 0%{ box-shadow:0 0 6px #fff } 50%{ box-shadow:0 0 28px #ffd74d } 100%{ box-shadow:0 0 6px #fff } }
 
-    /* confetti pieces */
+    
     .confetti {
       position:fixed; pointer-events:none; z-index:9999;
       width:10px; height:14px; opacity:0.95; transform:translateY(-20vh) rotate(10deg);
@@ -35,7 +35,7 @@
     }
     @keyframes fall { to { transform: translateY(110vh) rotate(360deg); } }
 
-    /* small banana icon bounce */
+    
     .banana-top { font-size:34px; margin-bottom:4px; animation: smallBounce 1.2s infinite; }
     @keyframes smallBounce { 0%{ transform:translateY(0)} 50%{ transform:translateY(-6px)} 100%{ transform:translateY(0)} }
   </style>
@@ -155,9 +155,7 @@ function scoringFor(lvl, tLeft) {
   return base + (tLeft * mult);
 }
 
-/* -------------------------
-   confetti (small) function
-   ------------------------- */
+
 function fireConfetti(count=20) {
   const colors = ['#ffd700','#ff6b6b','#6bffb8','#6bb8ff','#ffa36b'];
   for (let i=0;i<count;i++){
@@ -200,7 +198,7 @@ document.getElementById('checkBtn').addEventListener('click', async () => {
     const username = localStorage.getItem('username') || getCookie('username') || 'Guest';
     const points = scoringFor(level, Math.max(0, timeLeft));
     const payload = { username: username, level: level, score_time: timeLeft, points: points };
-    
+
     // send to backend (non-blocking)
     fetch('save_score.php', {
       method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload)
