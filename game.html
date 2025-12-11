@@ -176,9 +176,8 @@ function fireConfetti(count=20) {
   }
 }
 
-/* -------------------------
-   UI handlers
-   ------------------------- */
+//UI handlers
+
 document.getElementById('checkBtn').addEventListener('click', async () => {
   try { document.getElementById('sndClick').play().catch(()=>{}); } catch(e){}
   const grid = document.getElementById('puzzleGrid');
@@ -201,6 +200,7 @@ document.getElementById('checkBtn').addEventListener('click', async () => {
     const username = localStorage.getItem('username') || getCookie('username') || 'Guest';
     const points = scoringFor(level, Math.max(0, timeLeft));
     const payload = { username: username, level: level, score_time: timeLeft, points: points };
+    
     // send to backend (non-blocking)
     fetch('save_score.php', {
       method: 'POST', headers: {'Content-Type':'application/json'}, body: JSON.stringify(payload)
