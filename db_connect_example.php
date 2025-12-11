@@ -1,5 +1,5 @@
 <?php
-// Copy this file to db_connect.php and fill in your credentials
+
 $servername = "localhost";
 $username = "root";
 $password = "";

@@ -1,50 +1,30 @@
 <?php
 session_start();
-if (!isset($_SESSION['otp'])) {
-    header("Location: login.html");
-    exit();
+if(!isset($_SESSION['otp'])){
+  header("Location: login.html");
+  exit();
 }
 ?>
-
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-<meta charset="UTF-8">
-<title>Verify Code - Banana Puzzle Adventure</title>
-<style>
-body {
-  background: linear-gradient(135deg, #1b5e20, #388e3c);
-  font-family: 'Poppins', sans-serif;
-  text-align: center;
-  color: white;
-  margin-top: 100px;
-}
-input {
-  padding: 10px;
-  border-radius: 5px;
-  border: none;
-  font-size: 18px;
-  width: 150px;
-  text-align: center;
-}
-button {
-  background-color: #ffeb3b;
-  border: none;
-  padding: 10px 20px;
-  margin-top: 20px;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-}
-</style>
+  <meta charset="UTF-8" />
+  <title>Verify OTP</title>
+  <style>
+    body { background:#0b3d2e; color:white; text-align:center; padding-top:80px; font-family:Poppins; }
+    input { padding:12px; border-radius:8px; width:180px; text-align:center; }
+    button { padding:12px 20px; border-radius:8px; border:none; background:#ffbf00; cursor:pointer; }
+  </style>
 </head>
 <body>
-  <h2>🔐 Verify Your Email</h2>
-  <p>Enter the 6-digit code sent to your email:</p>
 
-  <form method="POST" action="check_otp.php">
-    <input type="text" name="otp_input" maxlength="6" required><br>
+  <h2>Enter Your 6-Digit Code</h2>
+
+  <form action="check_otp.php" method="POST">
+    <input type="text" maxlength="6" name="otp_input" required /><br><br>
     <button type="submit">Verify</button>
   </form>
+
 </body>
 </html>
+
